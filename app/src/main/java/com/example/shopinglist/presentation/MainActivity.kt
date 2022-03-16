@@ -8,15 +8,16 @@ import com.example.shopinglist.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel:MainViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.shopList.observe(this){
-            Log.d("Main ActivityTest",it.toString())
+        viewModel.shopList.observe(this) {
+            Log.d("Main ActivityTest", it.toString())
+
         }
-        viewModel.getShopList()
+
+
     }
 
 }
