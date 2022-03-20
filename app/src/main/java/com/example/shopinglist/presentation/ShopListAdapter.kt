@@ -1,6 +1,7 @@
 package com.example.shopinglist.presentation
 
 import android.util.Log
+import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,8 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
             field = value
             notifyDataSetChanged()
         }
-
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemClickListener:((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         val layout = when (viewType) {
@@ -35,8 +37,14 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         val shopItem = shopList[position]
 
         viewHolder.view.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(shopItem)
             true
         }
+        viewHolder.view.setOnClickListener{
+            onShopItemClickListener?.invoke(shopItem)
+
+        }
+
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
 
@@ -44,9 +52,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     override fun onViewRecycled(holder: ShopItemViewHolder) {
         super.onViewRecycled(holder)
-        /*holder.tvName.text = ""
-        holder.tvCount.text = ""
-        */holder.tvName.setTextColor(ContextCompat.getColor(holder.view.context,
+        holder.tvName.setTextColor(ContextCompat.getColor(holder.view.context,
             android.R.color.white))
     }
 
@@ -69,4 +75,5 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         val tvName = view.findViewById<TextView>(R.id.tv_name)
         val tvCount = view.findViewById<TextView>(R.id.tv_count)
     }
+
 }
