@@ -1,30 +1,15 @@
 package com.example.shopinglist.presentation
 
-import android.util.Log
-import android.view.DragEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.example.shopinglist.R
 import com.example.shopinglist.domain.ShopItem
-import java.lang.RuntimeException
 
-class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
-    var count = 0
-    var shopList = listOf<ShopItem>()
-        set(value) {
-            val callback = ShopListDiffCallback(shopList,value)
-            val diffResult = DiffUtil.calculateDiff(callback)
-            diffResult.dispatchUpdatesTo(this)
-            field = value
-
-        }
+class ShopListAdapter :
+    androidx.recyclerview.widget.ListAdapter<ShopItem, ShopItemViewHolder>(
+        ShopItemDiffCallback()) {
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
-    var onShopItemClickListener:((ShopItem) -> Unit)? = null
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         val layout = when (viewType) {
@@ -32,42 +17,29 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
             VIEW_TYPE_DISABLED -> R.layout.item_shop_disabled
             else -> throw RuntimeException("Unknown View Type $viewType")
         }
-        Log.d("CreateViewHolder","New View Holder Created")
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ShopItemViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
 
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
 
         viewHolder.view.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(shopItem)
             true
         }
-        viewHolder.view.setOnClickListener{
+        viewHolder.view.setOnClickListener {
             onShopItemClickListener?.invoke(shopItem)
 
         }
 
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
-        Log.d("onBindViewHolder", "count: ${++count}")
-
-    }
-
-    override fun onViewRecycled(holder: ShopItemViewHolder) {
-        super.onViewRecycled(holder)
-        holder.tvName.setTextColor(ContextCompat.getColor(holder.view.context,
-            android.R.color.white))
-    }
-
-    override fun getItemCount(): Int {
-        return shopList.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (shopList[position].enable) VIEW_TYPE_ENABLED else VIEW_TYPE_DISABLED
+        return if (getItem(position).enable) VIEW_TYPE_ENABLED else VIEW_TYPE_DISABLED
 
     }
 
@@ -77,9 +49,5 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         const val MAX_POOL_SIZE = 10
     }
 
-    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tv_name)
-        val tvCount = view.findViewById<TextView>(R.id.tv_count)
-    }
 
 }
