@@ -53,11 +53,11 @@ class ShopItemViewModel:ViewModel() {
     private fun validateInput(name: String, count: Int):Boolean{
         var result = true
         if (name.isBlank()){
-            TODO("Show error input name")
+            //TODO("Show error input name")
             result = false
         }
         if (count<=0){
-            TODO("Show error input count")
+            //TODO("Show error input count")
             result = false
         }
         return result
