@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 import java.lang.RuntimeException
 
 class ShopItemActivity : AppCompatActivity() {
-    private lateinit var viewModel:ShopItemViewModel
+   /* private lateinit var viewModel:ShopItemViewModel
 
     private lateinit var tilName:TextInputLayout
     private lateinit var tilCount:TextInputLayout
@@ -25,19 +25,19 @@ class ShopItemActivity : AppCompatActivity() {
 
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
-
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
-        parseIntent()
+        /*parseIntent()
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews()
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
-
+*/
     }
-    private fun observeViewModel(){
+    /*private fun observeViewModel(){
         viewModel.errorInputCount.observe(this){
             val message = if (it){
                 getString(R.string.error_input_count)
@@ -133,7 +133,7 @@ class ShopItemActivity : AppCompatActivity() {
         etName = findViewById(R.id.et_name)
         etCount = findViewById(R.id.et_count)
         buttonSave = findViewById(R.id.save_button)
-    }
+    }*/
     companion object{
        private const val EXTRA_SCREEN_MODE = "extra_mode"
        private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
