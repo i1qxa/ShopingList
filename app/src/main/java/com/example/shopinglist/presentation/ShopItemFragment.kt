@@ -74,7 +74,7 @@ class ShopItemFragment():Fragment()
             tilName.error = message
         }
         viewModel.shouldCloseScreen.observe(viewLifecycleOwner){
-            finish()
+            activity?.onBackPressed()
         }
     }
 
@@ -173,6 +173,17 @@ class ShopItemFragment():Fragment()
                     putInt(SHOP_ITEM_ID, shopItemId)
                 }
             }
+        }
+        fun newIntentAddItem(context: Context):Intent{
+            val intent = Intent(context, ShopItemActivity::class.java)
+            intent.putExtra(SCREEN_MODE, MODE_ADD)
+            return intent
+        }
+        fun newIntentEditItem(context: Context, shopItemId:Int):Intent{
+            val intent = Intent(context,ShopItemActivity::class.java)
+            intent.putExtra(SCREEN_MODE, MODE_EDIT)
+            intent.putExtra(SHOP_ITEM_ID,shopItemId)
+            return intent
         }
     }
 }
