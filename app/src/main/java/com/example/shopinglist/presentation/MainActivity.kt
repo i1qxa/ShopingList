@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         buttonAddItem.setOnClickListener {
             if (!isOnePaneMode()){
                 val fragment = ShopItemFragment.newInstanceAddItem()
-                launchFragment(fragment)
+                launchFragment(fragment,"add")
             }
             else{
                 val intent = ShopItemActivity.newIntentAddItem(this)
@@ -37,11 +37,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun launchFragment(fragment:ShopItemFragment){
-        supportFragmentManager.popBackStack()
+    private fun launchFragment(fragment:ShopItemFragment,name:String){
         supportFragmentManager.beginTransaction()
             .replace(R.id.shop_item_container,fragment)
-            .addToBackStack(null)
+            .addToBackStack(name)
             .commit()
     }
 
@@ -94,10 +93,14 @@ class MainActivity : AppCompatActivity() {
             }
             else{
                 val fragment = ShopItemFragment.newInstanceEditItem(it.id)
-                launchFragment(fragment)
+                launchFragment(fragment,"edit")
                 }
 
         }
+    }
+
+    override fun onBackPressed() {
+        supportFragmentManager.popBackStack("add",0)
     }
 
     private fun setupItemLongClickListener() {
