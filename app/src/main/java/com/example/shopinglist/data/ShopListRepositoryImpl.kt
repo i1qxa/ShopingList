@@ -2,7 +2,9 @@ package com.example.shopinglist.data
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.shopinglist.domain.ShopItem
 import com.example.shopinglist.domain.ShopListRepository
 import java.lang.RuntimeException
@@ -31,7 +33,9 @@ class ShopListRepositoryImpl(
         throw RuntimeException("Element with id $shopItemId not found")
     }
 
-    override fun getShopList(): LiveData<List<ShopItem>> = shopListDao.getShopList()
+    override fun getShopList(): LiveData<List<ShopItem>> = Transformations.map(shopListDao.getShopList()){
+        mapper.mapListDbModelToListEntity(it)
+    }
 
 
 }
