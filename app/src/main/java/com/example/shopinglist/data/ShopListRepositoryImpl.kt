@@ -29,7 +29,7 @@ class ShopListRepositoryImpl(
     }
 
     override suspend fun getShopItem(shopItemId: Int): ShopItem {
-        return mapper.mapDbModelToEntity(shopListDao.getShopItem(shopItemId)) 
+        return mapper.mapDbModelToEntity(shopListDao.getShopItem(shopItemId))
     }
 
     override fun getShopList(): LiveData<List<ShopItem>> = Transformations.map(shopListDao.getShopList()){
