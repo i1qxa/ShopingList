@@ -7,9 +7,6 @@ import com.example.shopinglist.domain.AddShopItem
 import com.example.shopinglist.domain.EditShopItem
 import com.example.shopinglist.domain.GetShopItem
 import com.example.shopinglist.domain.ShopItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
